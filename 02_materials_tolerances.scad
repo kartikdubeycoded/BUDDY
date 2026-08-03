@@ -2,6 +2,11 @@
 ================================================================
 AIDRONE - FILE 02 / 24
 MATERIALS + MANUFACTURING + TOLERANCE AUTHORITY
+
+This file intentionally does NOT redefine CAMERA_BODY_* or
+CAMERA_POCKET_* from 00_master_parameters.scad. OpenSCAD uses a
+single variable namespace across include() expansion; the previous
+duplicate names caused the CAMERA_SIDE_CLEARANCE evaluation warnings.
 ================================================================
 */
 $fn=100;
@@ -35,15 +40,15 @@ CORE_OD=74.0;
 CORE_COLLAR_RADIAL_CLEARANCE=CLEARANCE_SLIDING;
 COLLAR_BORE=female_bore_for_male(CORE_OD,CORE_COLLAR_RADIAL_CLEARANCE);
 
-// Keep the camera-fit authority self-contained.  Passing the clearance
-// explicitly avoids OpenSCAD scope/evaluation ambiguity seen in imported files.
-CAMERA_BODY_X=14.0;
-CAMERA_BODY_Y=14.0;
-CAMERA_BODY_Z=14.0;
-CAMERA_SIDE_CLEARANCE=0.15;
-CAMERA_POCKET_X=CAMERA_BODY_X+2*CAMERA_SIDE_CLEARANCE;
-CAMERA_POCKET_Y=CAMERA_BODY_Y+2*CAMERA_SIDE_CLEARANCE;
-CAMERA_POCKET_Z=CAMERA_BODY_Z+2*CAMERA_SIDE_CLEARANCE;
+// Manufacturing fit policy for camera cavities.  Names are prefixed TOL_
+// so they cannot collide with the geometry authority in File 00.
+TOL_CAMERA_BODY_X=14.0;
+TOL_CAMERA_BODY_Y=14.0;
+TOL_CAMERA_BODY_Z=14.0;
+TOL_CAMERA_SIDE_CLEARANCE=0.15;
+TOL_CAMERA_POCKET_X=TOL_CAMERA_BODY_X+2*TOL_CAMERA_SIDE_CLEARANCE;
+TOL_CAMERA_POCKET_Y=TOL_CAMERA_BODY_Y+2*TOL_CAMERA_SIDE_CLEARANCE;
+TOL_CAMERA_POCKET_Z=TOL_CAMERA_BODY_Z+2*TOL_CAMERA_SIDE_CLEARANCE;
 
 KEY_SIDE_CLEARANCE=CLEARANCE_SLIDING;
 function keyway_width(key_width)=key_width+2*KEY_SIDE_CLEARANCE;
@@ -87,7 +92,7 @@ assert(MIN_CRASH_MEMBER>=2.0,"Crash member below structural study minimum.");
 assert(CLEARANCE_MOVING>CLEARANCE_SLIDING,"Moving fit must be looser than sliding fit.");
 assert(CLEARANCE_SLIDING>CLEARANCE_CLOSE,"Sliding fit must be looser than close fit.");
 assert(abs(COLLAR_BORE-74.4)<0.0001,"Core/collar interface changed unexpectedly.");
-assert(abs(CAMERA_POCKET_X-14.3)<0.0001 && abs(CAMERA_POCKET_Y-14.3)<0.0001 && abs(CAMERA_POCKET_Z-14.3)<0.0001,"Camera pocket tolerance authority changed unexpectedly.");
+assert(abs(TOL_CAMERA_POCKET_X-14.3)<0.0001 && abs(TOL_CAMERA_POCKET_Y-14.3)<0.0001 && abs(TOL_CAMERA_POCKET_Z-14.3)<0.0001,"Camera manufacturing pocket policy changed unexpectedly.");
 assert(MIN_ROTOR_STATIC_RADIAL_CLEARANCE>=1.0,"Rotor manufacturing clearance below current safety floor.");
 
 echo("============================================");
@@ -101,9 +106,9 @@ echo("Preferred crash member =",PREFERRED_CRASH_MEMBER);
 echo("Sliding radial clearance =",CLEARANCE_SLIDING);
 echo("Core OD =",CORE_OD);
 echo("Collar bore =",COLLAR_BORE);
-echo("Camera pocket X =",CAMERA_POCKET_X);
-echo("Camera pocket Y =",CAMERA_POCKET_Y);
-echo("Camera pocket Z =",CAMERA_POCKET_Z);
+echo("Tolerance camera pocket X =",TOL_CAMERA_POCKET_X);
+echo("Tolerance camera pocket Y =",TOL_CAMERA_POCKET_Y);
+echo("Tolerance camera pocket Z =",TOL_CAMERA_POCKET_Z);
 echo("M2 printed clearance hole =",M2_CLEARANCE_HOLE);
 echo("Minimum motor support thickness =",MOTOR_SUPPORT_MIN_THICKNESS);
 echo("Minimum rotor radial clearance =",MIN_ROTOR_STATIC_RADIAL_CLEARANCE);
