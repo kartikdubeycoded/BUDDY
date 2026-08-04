@@ -1,0 +1,13 @@
+subsystem,quantity,mass_budget_g,geometry_constraint,performance_constraint,status
+crash_shell,1,22,OD<=115mm; cavity>=111mm,impact/rotor containment test required,PROVISIONAL
+central_duct,1,15,airway=70mm; OD~74mm,smooth protected airflow,GEOMETRY
+motors,2,20,total packaging inside duct architecture,measured combined thrust must satisfy system T/W gate,UNSELECTED
+rotors,2,18,dynamic diameter<70mm with runout margin,counter-rotating; balanced; measured thrust data,UNSELECTED
+ESC_system,1,8,distributed packaging,current+thermal margin above measured peak,UNSELECTED
+battery_system,1,42,equatorial symmetric packaging,measured sag/current/energy requirements,UNSELECTED
+flight_controller,1,5,distributed electronics envelope,local stabilization independent of phone,UNSELECTED
+camera_system,4,12,14.2mm cavity each; shell margin>=1mm,calibrated FOV/latency/synchronization,UNSELECTED
+actuators,4,10,outside protected airway,torque-speed-current validated under vane load,UNSELECTED
+speaker_audio,1,4,outside airway; symmetric compensation,intelligible speech within power budget,UNSELECTED
+wiring_fasteners_damping,1,10,no moving/airway interference,vibration retention and serviceability,UNSELECTED
+TOTAL_TARGET,1,166,leaves 24g growth margin to 190g target,all measured masses required,TARGET
